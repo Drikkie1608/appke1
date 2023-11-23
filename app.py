@@ -1,5 +1,6 @@
 from flask import Flask
 import requests
+import time
 
 app = Flask(__name__)
 
@@ -8,9 +9,11 @@ def hello_world():
     service_name = 'appke2-service'
     api_url = f'http://{service_name}:80'
     try:
+        start = time.time()
         response = requests.get(api_url)
+        end = time.time()
         if response.status_code == 200:
-            return response.text
+            return response.text + '\n' + f'Time: {end - start}'
         else:
             return 'Error'
     except Exception as e:
